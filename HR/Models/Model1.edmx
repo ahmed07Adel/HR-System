@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HRModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CareerField">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompanyJob">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="JobArrangement" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BirthGovernorateId" Type="int" Nullable="false" />
+          <Property Name="BirthNeighborhoodId" Type="int" Nullable="false" />
+          <Property Name="CareerFieldId" Type="int" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="CompanyJobId" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeQualification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QualificationId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Governorate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Neighborhood">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GovernorateId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Qualification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employee_CareerField">
+          <End Role="CareerField" Type="Self.CareerField" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CareerField">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="CareerFieldId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_CompanyJob">
+          <End Role="CompanyJob" Type="Self.CompanyJob" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyJob">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="CompanyJobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Governorate">
+          <End Role="Governorate" Type="Self.Governorate" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Governorate">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="BirthGovernorateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Neighborhood">
+          <End Role="Neighborhood" Type="Self.Neighborhood" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Neighborhood">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="BirthNeighborhoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeQualification_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeQualification" Type="Self.EmployeeQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeQualification">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeQualification_Qualification">
+          <End Role="Qualification" Type="Self.Qualification" Multiplicity="1" />
+          <End Role="EmployeeQualification" Type="Self.EmployeeQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Qualification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeQualification">
+              <PropertyRef Name="QualificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Neighborhood_Governorate1">
+          <End Role="Governorate" Type="Self.Governorate" Multiplicity="1" />
+          <End Role="Neighborhood" Type="Self.Neighborhood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Governorate">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Neighborhood">
+              <PropertyRef Name="GovernorateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HRModelStoreContainer">
+          <EntitySet Name="CareerField" EntityType="Self.CareerField" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyJob" EntityType="Self.CompanyJob" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeQualification" EntityType="Self.EmployeeQualification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Governorate" EntityType="Self.Governorate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Neighborhood" EntityType="Self.Neighborhood" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Qualification" EntityType="Self.Qualification" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_CareerField" Association="Self.FK_Employee_CareerField">
+            <End Role="CareerField" EntitySet="CareerField" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_CompanyJob" Association="Self.FK_Employee_CompanyJob">
+            <End Role="CompanyJob" EntitySet="CompanyJob" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Governorate" Association="Self.FK_Employee_Governorate">
+            <End Role="Governorate" EntitySet="Governorate" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Neighborhood" Association="Self.FK_Employee_Neighborhood">
+            <End Role="Neighborhood" EntitySet="Neighborhood" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeQualification_Employee" Association="Self.FK_EmployeeQualification_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeQualification" EntitySet="EmployeeQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeQualification_Qualification" Association="Self.FK_EmployeeQualification_Qualification">
+            <End Role="Qualification" EntitySet="Qualification" />
+            <End Role="EmployeeQualification" EntitySet="EmployeeQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Neighborhood_Governorate1" Association="Self.FK_Neighborhood_Governorate1">
+            <End Role="Governorate" EntitySet="Governorate" />
+            <End Role="Neighborhood" EntitySet="Neighborhood" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CareerField">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_CareerField" FromRole="CareerField" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="CompanyJob">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JobArrangement" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_CompanyJob" FromRole="CompanyJob" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BirthGovernorateId" Type="Int32" Nullable="false" />
+          <Property Name="BirthNeighborhoodId" Type="Int32" Nullable="false" />
+          <Property Name="CareerFieldId" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyJobId" Type="Int32" />
+          <NavigationProperty Name="CareerField" Relationship="Self.FK_Employee_CareerField" FromRole="Employee" ToRole="CareerField" />
+          <NavigationProperty Name="CompanyJob" Relationship="Self.FK_Employee_CompanyJob" FromRole="Employee" ToRole="CompanyJob" />
+          <NavigationProperty Name="Governorate" Relationship="Self.FK_Employee_Governorate" FromRole="Employee" ToRole="Governorate" />
+          <NavigationProperty Name="Neighborhood" Relationship="Self.FK_Employee_Neighborhood" FromRole="Employee" ToRole="Neighborhood" />
+          <NavigationProperty Name="EmployeeQualifications" Relationship="Self.FK_EmployeeQualification_Employee" FromRole="Employee" ToRole="EmployeeQualification" />
+        </EntityType>
+        <EntityType Name="EmployeeQualification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QualificationId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeQualification_Employee" FromRole="EmployeeQualification" ToRole="Employee" />
+          <NavigationProperty Name="Qualification" Relationship="Self.FK_EmployeeQualification_Qualification" FromRole="EmployeeQualification" ToRole="Qualification" />
+        </EntityType>
+        <EntityType Name="Governorate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Governorate" FromRole="Governorate" ToRole="Employee" />
+          <NavigationProperty Name="Neighborhoods" Relationship="Self.FK_Neighborhood_Governorate1" FromRole="Governorate" ToRole="Neighborhood" />
+        </EntityType>
+        <EntityType Name="Neighborhood">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GovernorateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Neighborhood" FromRole="Neighborhood" ToRole="Employee" />
+          <NavigationProperty Name="Governorate" Relationship="Self.FK_Neighborhood_Governorate1" FromRole="Neighborhood" ToRole="Governorate" />
+        </EntityType>
+        <EntityType Name="Qualification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EmployeeQualifications" Relationship="Self.FK_EmployeeQualification_Qualification" FromRole="Qualification" ToRole="EmployeeQualification" />
+        </EntityType>
+        <Association Name="FK_Employee_CareerField">
+          <End Role="CareerField" Type="Self.CareerField" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CareerField">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="CareerFieldId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_CompanyJob">
+          <End Role="CompanyJob" Type="Self.CompanyJob" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyJob">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="CompanyJobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Governorate">
+          <End Role="Governorate" Type="Self.Governorate" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Governorate">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="BirthGovernorateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Neighborhood">
+          <End Role="Neighborhood" Type="Self.Neighborhood" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Neighborhood">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="BirthNeighborhoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeQualification_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeQualification" Type="Self.EmployeeQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeQualification">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeQualification_Qualification">
+          <End Role="Qualification" Type="Self.Qualification" Multiplicity="1" />
+          <End Role="EmployeeQualification" Type="Self.EmployeeQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Qualification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeQualification">
+              <PropertyRef Name="QualificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Neighborhood_Governorate1">
+          <End Role="Governorate" Type="Self.Governorate" Multiplicity="1" />
+          <End Role="Neighborhood" Type="Self.Neighborhood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Governorate">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Neighborhood">
+              <PropertyRef Name="GovernorateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CareerFields" EntityType="Self.CareerField" />
+          <EntitySet Name="CompanyJobs" EntityType="Self.CompanyJob" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeQualifications" EntityType="Self.EmployeeQualification" />
+          <EntitySet Name="Governorates" EntityType="Self.Governorate" />
+          <EntitySet Name="Neighborhoods" EntityType="Self.Neighborhood" />
+          <EntitySet Name="Qualifications" EntityType="Self.Qualification" />
+          <AssociationSet Name="FK_Employee_CareerField" Association="Self.FK_Employee_CareerField">
+            <End Role="CareerField" EntitySet="CareerFields" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_CompanyJob" Association="Self.FK_Employee_CompanyJob">
+            <End Role="CompanyJob" EntitySet="CompanyJobs" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Governorate" Association="Self.FK_Employee_Governorate">
+            <End Role="Governorate" EntitySet="Governorates" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Neighborhood" Association="Self.FK_Employee_Neighborhood">
+            <End Role="Neighborhood" EntitySet="Neighborhoods" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeQualification_Employee" Association="Self.FK_EmployeeQualification_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeQualification" EntitySet="EmployeeQualifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeQualification_Qualification" Association="Self.FK_EmployeeQualification_Qualification">
+            <End Role="Qualification" EntitySet="Qualifications" />
+            <End Role="EmployeeQualification" EntitySet="EmployeeQualifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Neighborhood_Governorate1" Association="Self.FK_Neighborhood_Governorate1">
+            <End Role="Governorate" EntitySet="Governorates" />
+            <End Role="Neighborhood" EntitySet="Neighborhoods" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRModelStoreContainer" CdmEntityContainer="HREntities">
+          <EntitySetMapping Name="CareerFields">
+            <EntityTypeMapping TypeName="HRModel.CareerField">
+              <MappingFragment StoreEntitySet="CareerField">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyJobs">
+            <EntityTypeMapping TypeName="HRModel.CompanyJob">
+              <MappingFragment StoreEntitySet="CompanyJob">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="JobArrangement" ColumnName="JobArrangement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="HRModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BirthGovernorateId" ColumnName="BirthGovernorateId" />
+                <ScalarProperty Name="BirthNeighborhoodId" ColumnName="BirthNeighborhoodId" />
+                <ScalarProperty Name="CareerFieldId" ColumnName="CareerFieldId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CompanyJobId" ColumnName="CompanyJobId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeQualifications">
+            <EntityTypeMapping TypeName="HRModel.EmployeeQualification">
+              <MappingFragment StoreEntitySet="EmployeeQualification">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QualificationId" ColumnName="QualificationId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Governorates">
+            <EntityTypeMapping TypeName="HRModel.Governorate">
+              <MappingFragment StoreEntitySet="Governorate">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Neighborhoods">
+            <EntityTypeMapping TypeName="HRModel.Neighborhood">
+              <MappingFragment StoreEntitySet="Neighborhood">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GovernorateId" ColumnName="GovernorateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Qualifications">
+            <EntityTypeMapping TypeName="HRModel.Qualification">
+              <MappingFragment StoreEntitySet="Qualification">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

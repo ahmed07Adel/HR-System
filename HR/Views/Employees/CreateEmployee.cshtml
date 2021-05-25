@@ -1,0 +1,56 @@
+﻿@model HR.ViewModel.CreateEmployeeViewModel
+@{
+    ViewBag.Title = "CreateEmployee";
+}
+
+<h2>CreateEmployee</h2>
+
+@using (Html.BeginForm("CreateEmployee", "Employees", FormMethod.Post))
+{
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label" for="Name">Employee Name</label>
+                @Html.TextBoxFor(a => a.Employee.Name)
+                @*<input type="text" id="Name" name="Name" class="form-control" />*@
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.Employee.BirthGovernorateId, Model.Gov, "Select Governorate",
+           htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.Employee.BirthNeighborhoodId, Model.Neighbor, "Select Governorate",
+          htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label" for="Address">Address.</label>
+                @Html.TextAreaFor(a => a.Employee.Address);
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.Employee.CareerFieldId, Model.Careers, "Select Governorate",
+  htmlAttributes: new { @class = "form-control" })
+          
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.Employee.CompanyJobId, Model.CompanyJobs, "Select Governorate",
+  htmlAttributes: new { @class = "form-control" })
+   
+            </div>
+        </div>
+    </div>
+
+    <button id="Search" type="submit" value="CreateEmployee">Create</button>
+}

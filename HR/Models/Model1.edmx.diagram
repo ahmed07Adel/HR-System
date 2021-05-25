@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="acc8e7da899948808258b9481fcf9502" Name="Diagram1">
+        <EntityTypeShape EntityType="HRModel.CareerField" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRModel.CompanyJob" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRModel.Employee" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRModel.EmployeeQualification" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRModel.Governorate" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRModel.Neighborhood" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRModel.Qualification" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="HRModel.FK_Employee_CareerField" ManuallyRouted="false" />
+        <AssociationConnector Association="HRModel.FK_Employee_CompanyJob" ManuallyRouted="false" />
+        <AssociationConnector Association="HRModel.FK_Employee_Governorate" ManuallyRouted="false" />
+        <AssociationConnector Association="HRModel.FK_Employee_Neighborhood" ManuallyRouted="false" />
+        <AssociationConnector Association="HRModel.FK_EmployeeQualification_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="HRModel.FK_EmployeeQualification_Qualification" ManuallyRouted="false" />
+        <AssociationConnector Association="HRModel.FK_Neighborhood_Governorate1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
